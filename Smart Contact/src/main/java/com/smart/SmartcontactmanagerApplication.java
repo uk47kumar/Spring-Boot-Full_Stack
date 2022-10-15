@@ -20,37 +20,44 @@ public class SmartcontactmanagerApplication {
 	}
 
 	@RequestMapping("/home")
-	public String welcome(){
+	public String welcome() {
 		return "hello";
 
 	}
 
 
 	@RequestMapping("/welcome")
-	public String first(){
+	public String first() {
 		return "hello how are you! isn't it fun";
 	}
+
 	@RequestMapping("/welcome")
-	public String f(){
+	public String f() {
 		return "hello how are";
 	}
+
 	@RequestMapping("/welcome")
-	public String fi(){
+	public String fi() {
 		return "hello how are you! isn't it fun";
 	}
+
 	@RequestMapping("/welcome")
-	public String fir(){
+	public String fir() {
 		return "hello how are you! isn't it fun";
 	}
+
 	@RequestMapping("/welcome")
-	public String firs(){
-		return "hello how are you! isn't it fun";
-	}@RequestMapping("/welcome")
-	public String s(){
+	public String firs() {
 		return "hello how are you! isn't it fun";
 	}
+
 	@RequestMapping("/welcome")
-	public String se(){
+	public String s() {
+		return "hello how are you! isn't it fun";
+	}
+
+	@RequestMapping("/welcome")
+	public String se() {
 		return "hello how are you! isn't it fun";
 	}
 	@RequestMapping("/welcome")
@@ -58,5 +65,10 @@ public class SmartcontactmanagerApplication {
 		return "hello how are you! isn't it fun";
 	}
 
-
+	@RequestMapping("/final")
+	public String finalw(){
+		return "final";
+	}
 }
+
+
