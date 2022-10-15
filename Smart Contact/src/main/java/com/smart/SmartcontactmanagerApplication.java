@@ -34,6 +34,10 @@ public class SmartcontactmanagerApplication {
 	public String f(){
 		return "hello how are";
 	}
+	@RequestMapping("/welcome")
+	public String fi(){
+		return "hello how are you! isn't it fun";
+	}
 
 
 }
