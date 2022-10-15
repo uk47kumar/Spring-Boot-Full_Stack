@@ -53,6 +53,10 @@ public class SmartcontactmanagerApplication {
 	public String se(){
 		return "hello how are you! isn't it fun";
 	}
+	@RequestMapping("/welcome")
+	public String sec(){
+		return "hello how are you! isn't it fun";
+	}
 
 
 }
