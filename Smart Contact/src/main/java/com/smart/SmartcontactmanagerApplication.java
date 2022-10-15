@@ -13,8 +13,15 @@ public class SmartcontactmanagerApplication {
 		SpringApplication.run(SmartcontactmanagerApplication.class, args);
 	}
 
+	@RequestMapping("/")
+	public String home(){
+		//creating endpoints
+		return "welcome to springboot project home";
+
+
 	@RequestMapping("/home")
 	public String welcome(){
 		return "hello";
+
 	}
 }
