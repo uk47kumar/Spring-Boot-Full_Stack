@@ -24,4 +24,9 @@ public class SmartcontactmanagerApplication {
 		return "hello";
 
 	}
+
+	@RequestMapping("/welcome")
+	public String first(){
+		return "hello how are you!";
+	}
 }
