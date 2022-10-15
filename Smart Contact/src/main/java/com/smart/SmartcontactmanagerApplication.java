@@ -14,14 +14,19 @@ public class SmartcontactmanagerApplication {
 	}
 
 	@RequestMapping("/")
-	public String home(){
+	public String home() {
 		//creating endpoints
 		return "welcome to springboot project home";
-
+	}
 
 	@RequestMapping("/home")
 	public String welcome(){
 		return "hello";
 
+	}
+
+	@RequestMapping("/welcome")
+	public String first(){
+		return "hello how are you!";
 	}
 }
