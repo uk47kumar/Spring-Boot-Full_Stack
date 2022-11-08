@@ -6,7 +6,117 @@
 </head>
 <body>
 <section>
-    <h1>User adding form</h1>
+
+    <div class="card mr-4">
+        <div class="card-body">
+            <h1 class="text-center">Add Contact</h1>
+            <div class="container-fluid mt-1">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+
+                        <form action="#"
+                              th:object="${contact}"
+                              enctype="multipart/form-data"
+                              method="post"
+                              th:action="@{/user/process-contact}"
+                              class="mt-2">
+
+<!--                            First Name-->
+                            <div class="input-group">
+                                <div class="input-group-pretend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-plus"></i>
+                                    </div>
+                                </div>
+
+                                <input style="height: 30px"
+                                       type="text"
+                                       id="firstName"
+                                       name="name"
+                                       placeholder="Enter Name here"
+                                       class="form-control"/>
+                            </div>
+
+<!--                            Second Name-->
+                            <div class="input-group mt-3">
+                                <div class="input-group-pretend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-user-alt"></i>
+                                    </div>
+                                </div>
+
+                                <input style="height: 30px"
+                                       type="text"
+                                       id="secondName"
+                                       name="secondName"
+                                       placeholder="Enter Nick Name here"
+                                       class="form-control"/>
+                            </div>
+
+<!--                            Phone-->
+                            <div class="input-group mt-3">
+                                <div class="input-group-pretend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                </div>
+
+                                <input style="height: 30px"
+                                       type="number"
+                                       id="phone"
+                                       name="phone"
+                                       placeholder="Enter Phone Number here"
+                                       class="form-control"/>
+                            </div>
+
+<!--                            Email-->
+                            <div class="input-group mt-3">
+                                <div class="input-group-pretend">
+                                    <div style="height: 30px" class="input-group-text">
+                                        @
+                                    </div>
+                                </div>
+
+                                <input style="height: 30px"
+                                       type="email"
+                                       id="email"
+                                       name="email"
+                                       placeholder="Enter Email here"
+                                       class="form-control"/>
+                            </div>
+
+<!--                            Work here-->
+                            <div class="input-group mt-3">
+                                <div class="input-group-pretend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-briefcase"></i>
+                                    </div>
+                                </div>
+
+                                <input style="height: 30px"
+                                       type="text"
+                                       id="work"
+                                       name="work"
+                                       placeholder="Enter Work here"
+                                       class="form-control"/>
+                            </div>
+
+<!--                            Contact Description-->
+                            <div class="form-group mt-4">
+                                <textarea name="description"
+                                          id="description"
+                                          class="form-control"
+                                          rows="10"
+                                          placeholder="Enter contact description">
+                                </textarea>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 </body>
 </html>
