@@ -7,6 +7,9 @@ import com.smart.entity.User;
 import com.smart.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -110,18 +112,24 @@ public class UserController {
         return "normal/add_contact_form";
     }
 
-    @GetMapping("/show-contact")
-    public String showAllContacts(Model model, Principal principal){
+    // show 5 contact per page
+    // current page No. = 0
+    @GetMapping("/show-contact/{page}")
+    public String showAllContacts(@PathVariable("page") Integer page, Model model, Principal principal){
+
         model.addAttribute("title","User Contacts");
 
         // To find the list of user's contacts
         String userName = principal.getName();
         User user = this.userRepository.getUserByUserName(userName);
 
-        List<Contact> contacts = this.contactRepository.findContactByUser(user.getId());
+        Pageable pageable = PageRequest.of(page,3);
+
+        Page<Contact> contacts = this.contactRepository.findContactByUser(user.getId(),pageable);
 
         model.addAttribute("contacts",contacts);
-
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages",contacts.getTotalPages());
 
         return "normal/show_contact";
     }
