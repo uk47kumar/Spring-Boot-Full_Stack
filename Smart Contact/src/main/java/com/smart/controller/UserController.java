@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -77,6 +78,7 @@ public class UserController {
             if(file.isEmpty()){
                 //if the file is empty then try out message
                 System.out.println("File is empty");
+                contact.setImage("contact.png");
             }
             else {
                 // update the file to folder and update the name to contact
@@ -123,7 +125,7 @@ public class UserController {
         String userName = principal.getName();
         User user = this.userRepository.getUserByUserName(userName);
 
-        Pageable pageable = PageRequest.of(page,3);
+        Pageable pageable = PageRequest.of(page,5);
 
         Page<Contact> contacts = this.contactRepository.findContactByUser(user.getId(),pageable);
 
@@ -132,5 +134,17 @@ public class UserController {
         model.addAttribute("totalPages",contacts.getTotalPages());
 
         return "normal/show_contact";
+    }
+
+    //showing particular user's contact
+    @RequestMapping("/{cId}/contact")
+    public String showContactDetail(@PathVariable("cId") Integer cId, Model model){
+        System.out.println("CID: "+cId);
+
+        Optional<Contact> optionalContact = this.contactRepository.findById(cId);
+        Contact contact = optionalContact.get();
+        model.addAttribute("contact",contact);
+
+        return "normal/contact_detail";
     }
 }
