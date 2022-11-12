@@ -138,13 +138,33 @@ public class UserController {
 
     //showing particular user's contact
     @RequestMapping("/{cId}/contact")
-    public String showContactDetail(@PathVariable("cId") Integer cId, Model model){
+    public String showContactDetail(@PathVariable("cId") Integer cId, Model model, Principal principal){
         System.out.println("CID: "+cId);
 
         Optional<Contact> optionalContact = this.contactRepository.findById(cId);
         Contact contact = optionalContact.get();
-        model.addAttribute("contact",contact);
+        
+        // solving some issue security (user can view only own personal contact not other user's contact)
+        String userName = principal.getName();
+        User user = this.userRepository.getUserByUserName(userName);
 
+        if(user.getId()==contact.getUser().getId()) {
+            model.addAttribute("contact", contact);
+            model.addAttribute("title",contact.getName());
+        }
         return "normal/contact_detail";
+    }
+
+    @GetMapping("/delete/{cId}")
+    public String deleteContact(@PathVariable("cId") Integer cId, Model model, HttpSession session){
+
+        Contact contact = this.contactRepository.findById(cId).get();
+
+        contact.setUser(null);
+
+        this.contactRepository.delete(contact);
+        session.setAttribute("message", new Message("Your contact is deleted successfully","success"));
+
+        return "redirect:/user/show-contact/0";
     }
 }
