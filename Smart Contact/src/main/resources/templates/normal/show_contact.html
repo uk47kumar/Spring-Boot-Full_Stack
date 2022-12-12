@@ -12,14 +12,16 @@
 
             <!--            search-->
             <div class="search-container my-3">
-                <input onkeyup="search()" id="search-input" type="text" class="form-control" placeholder="search your contacts"/>
+                <input onkeyup="search()" id="search-input" type="text" class="form-control"
+                       placeholder="search your contacts"/>
                 <div class="search-result">
                     <!--                    result goes here-->
                     <h1>result</h1>
                 </div>
             </div>
 
-            <table class="table">
+            <div class="table-responsive">
+            <table class="table table-hover">
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">#ID</th>
@@ -52,6 +54,7 @@
                 </tr>
                 </tbody>
             </table>
+            </div>
 
             <!--            Pagination part-->
 
@@ -71,6 +74,12 @@
 
         </div>
     </div>
+    <script>
+        $(document).ready(() => {
+            $(".item").removeClass("active");
+            $("#contacts-link").addClass("active");
+        });
+    </script>
 </section>
 </body>
 </html>
