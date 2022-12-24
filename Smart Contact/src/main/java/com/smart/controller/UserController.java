@@ -10,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,9 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     UserRepository userRepository;
@@ -157,7 +161,7 @@ public class UserController {
     }
 
     @GetMapping("/delete/{cId}")
-    public String deleteContact(@PathVariable("cId") Integer cId, Model model, 
+    public String deleteContact(@PathVariable("cId") Integer cId, Model model,
                                 HttpSession session, Principal principal) {
 
         Contact contact = this.contactRepository.findById(cId).get();
@@ -228,8 +232,40 @@ public class UserController {
 
     // your profile handler
     @GetMapping("/profile")
-    public String yourProfile(Model model){
-        model.addAttribute("title","Profile Page");
+    public String yourProfile(Model model) {
+        model.addAttribute("title", "Profile Page");
         return "normal/profile";
+    }
+
+    // open setting handler
+    @GetMapping("/settings")
+    public String openSettings(Model model) {
+        model.addAttribute("title", "Settings");
+        return "normal/settings";
+    }
+
+    // change password handler
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("oldPassword") String oldPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 Principal principal,
+                                 HttpSession session) {
+        System.out.println("OLD PASSWORD: " + oldPassword);
+        System.out.println("NEW PASSWORD: " + newPassword);
+        String userName = principal.getName();
+        User currentUser = this.userRepository.getUserByUserName(userName);
+        System.out.println("Encrypt password: "+currentUser.getPassword());
+        if(this.bCryptPasswordEncoder.matches(oldPassword, currentUser.getPassword())){
+            // change the password
+            currentUser.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+            this.userRepository.save(currentUser);
+            session.setAttribute("message", new Message("Your password is successfully changed...", "success"));
+
+        }else {
+            //error
+            session.setAttribute("message", new Message("Please Enter Correct Old Password!", "danger"));
+            return "redirect:/user/settings";
+        }
+        return "redirect:/user/index";
     }
 }
